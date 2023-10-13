@@ -1,0 +1,46 @@
+digits={'0': 'ноль', '1': 'один', '2': 'два', '3': 'три', '4': 'четыре', '5': 'пять', '6': 'шесть', '7': 'семь', '8': 'восемь', '9': 'девять'}
+k=int(input('Введите число k: '))
+numbers=[]
+work_buffer=''
+text=open('data.txt')
+buffer=text.read(1)
+while buffer:                              #Чтение поблочно
+    work_buffer=''
+    while work_buffer=='':
+        work_buffer=work_buffer+buffer
+        buffer = text.read(1)
+    else:
+        while buffer==' ':
+            buffer = text.read(1)
+        else:
+            while buffer!=' ':
+                work_buffer = work_buffer + buffer
+                buffer=text.read(1)
+                if not buffer:
+                    break
+        buffer=text.read(1)
+        output_data=''
+        cur_digit=''
+        number4=''
+        count=0
+        for work_buffer2 in 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM!@#$%^&*()+=-_`~[{]};:,<.>?/|':     #проверка на лишнеи символы
+            if work_buffer2 in work_buffer:
+                work_buffer='2'
+        number=int(work_buffer)%2        #проверка на чётность
+        if number==0:
+            count=99
+        number2=int(work_buffer)
+        while number2!=0:                #выписывание цыфр
+            number3 = number2 % 10
+            if str(number3) not in number4:
+                number4+=str(number3)
+                cur_digit+=f'{digits[str(number3)]}'+' '
+                count+=1
+            number2=number2//10
+        if count>k:                      #проверка условия и вывод
+            count=0
+            cur_digit=''
+        else:
+            output_data+=work_buffer+'\n'+'Используются цыфры:'+cur_digit+'\n'
+        if output_data:
+            print(output_data, end=' ')
